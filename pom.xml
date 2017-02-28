@@ -42,4 +42,9 @@
 		</plugins>
 	</build>
 
+	<modules>
+		<module>sender</module>
+		<module>listener</module>
+		<module>commons</module>
+	</modules>
 </project>
