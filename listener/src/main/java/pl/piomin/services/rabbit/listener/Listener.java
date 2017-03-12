@@ -20,13 +20,17 @@ public class Listener {
 
 	private static Logger logger = Logger.getLogger("Listener");
 
+	private Long timestamp;
+
 	public static void main(String[] args) {
 		SpringApplication.run(Listener.class, args);
 	}
 
 	@RabbitListener(queues = "q.example")
 	public void onMessage(Order order) {
-		logger.info(order.toString());
+		if (timestamp == null)
+			timestamp = System.currentTimeMillis();
+		logger.info((System.currentTimeMillis() - timestamp) + " : " + order.toString());
 	}
 
 	@Bean
@@ -34,19 +38,19 @@ public class Listener {
 		CachingConnectionFactory connectionFactory = new CachingConnectionFactory();
 		connectionFactory.setUsername("guest");
 		connectionFactory.setPassword("guest");
-		connectionFactory.setAddresses("192.168.99.100:30000,192.168.99.100:30002,,192.168.99.100:30004");
+		connectionFactory.setAddresses("192.168.99.100:30000,192.168.99.100:30002,192.168.99.100:30004");
 		connectionFactory.setChannelCacheSize(10);
 		return connectionFactory;
 	}
-	
-    @Bean
-    public SimpleRabbitListenerContainerFactory rabbitListenerContainerFactory() {
-        SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
-        factory.setConnectionFactory(connectionFactory());
-        factory.setConcurrentConsumers(10);
-        factory.setMaxConcurrentConsumers(20);
-        return factory;
-    }
+
+	@Bean
+	public SimpleRabbitListenerContainerFactory rabbitListenerContainerFactory() {
+		SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
+		factory.setConnectionFactory(connectionFactory());
+		factory.setConcurrentConsumers(10);
+		factory.setMaxConcurrentConsumers(20);
+		return factory;
+	}
 
 	@Bean
 	public Queue queue() {

@@ -30,7 +30,7 @@ public class Sender {
 
 	@PostConstruct
 	public void send() {
-		for (int i = 0; i < 1000000; i++) {
+		for (int i = 0; i < 100000; i++) {
 			int id = new Random().nextInt(100000);
 			template.convertAndSend(new Order(id, "TEST"+id, OrderType.values()[(id%2)]));
 		}
@@ -52,6 +52,5 @@ public class Sender {
         rabbitTemplate.setExchange("ex.example");
         return rabbitTemplate;
     }
-  
     
 }
