@@ -2,9 +2,11 @@ spring:
   application:
     name: listener
   rabbitmq:
-    addresses: 192.168.99.100:5672
+    addresses: 192.168.99.100:30002
   cloud:
     vault:
+      uri: http://192.168.99.100:8200
+      token: s.2RZAXzq7Jxi2NMUnfRRFnt4D
       rabbitmq:
         enabled: true
         role: default
