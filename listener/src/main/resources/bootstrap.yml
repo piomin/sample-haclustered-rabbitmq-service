@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: listener
+  rabbitmq:
+    addresses: 192.168.99.100:5672
+  cloud:
+    vault:
+      rabbitmq:
+        enabled: true
+        role: default
+        backend: rabbitmq

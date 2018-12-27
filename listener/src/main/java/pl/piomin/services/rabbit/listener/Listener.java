@@ -33,20 +33,20 @@ public class Listener {
 		logger.info((System.currentTimeMillis() - timestamp) + " : " + order.toString());
 	}
 
-	@Bean
-	public ConnectionFactory connectionFactory() {
-		CachingConnectionFactory connectionFactory = new CachingConnectionFactory();
-		connectionFactory.setUsername("guest");
-		connectionFactory.setPassword("guest");
-		connectionFactory.setAddresses("192.168.99.100:30000,192.168.99.100:30002,192.168.99.100:30004");
-		connectionFactory.setChannelCacheSize(10);
-		return connectionFactory;
-	}
+//	@Bean
+//	public ConnectionFactory connectionFactory() {
+//		CachingConnectionFactory connectionFactory = new CachingConnectionFactory();
+//		connectionFactory.setUsername("guest");
+//		connectionFactory.setPassword("guest");
+//		connectionFactory.setAddresses("192.168.99.100:30000,192.168.99.100:30002,192.168.99.100:30004");
+//		connectionFactory.setChannelCacheSize(10);
+//		return connectionFactory;
+//	}
 
 	@Bean
-	public SimpleRabbitListenerContainerFactory rabbitListenerContainerFactory() {
+	public SimpleRabbitListenerContainerFactory rabbitListenerContainerFactory(ConnectionFactory connectionFactory) {
 		SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
-		factory.setConnectionFactory(connectionFactory());
+		factory.setConnectionFactory(connectionFactory);
 		factory.setConcurrentConsumers(10);
 		factory.setMaxConcurrentConsumers(20);
 		return factory;

@@ -1,0 +1,10 @@
+spring:
+  application.name: sender
+  rabbitmq.addresses: 192.168.99.100:5672
+  cloud.vault:
+    uri: http://192.168.99.100:8200
+    token: s.7DaENeiqLmsU5ZhEybBCRJhp
+    rabbitmq:
+      enabled: true
+      role: default
+      backend: rabbitmq
